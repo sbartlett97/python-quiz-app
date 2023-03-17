@@ -63,13 +63,8 @@ class Quiz:
         except Exception as e:
             print(f'encountered an error: {e}')
             return False
-
-    def run_quiz(self):
-        print('##################################\n'
-              '#         Let\'s Begin!          #\n'
-              '##################################\n')
-
-        for i, q in enumerate(self._questions):
+        
+    def print_question(self):
             answers = q.get_answers()
             random.shuffle(answers)
             print(f'+----------------------------------------------------------+\n'
@@ -80,6 +75,9 @@ class Quiz:
                 print(f'| ({j+1})    {a}                                                 |')
 
             print(f'+----------------------------------------------------------+\n')
+
+
+    def get_guess(self):
             while True:
                 try:
                     guess = int(input('What is your answer? (1-4): '))
@@ -88,7 +86,20 @@ class Quiz:
                 except TypeError:
                     print('\nYour guess must be a number between 1 and 4!\n')
 
+    def run_quiz(self):
+        print('##################################\n'
+              '#         Let\'s Begin!          #\n'
+              '##################################\n')
+
+        for i, q in enumerate(self._questions):
+            self.print_question(i, q)
+            
+            
+            g = self.get_guess()
+                
+
             correct = q.check_answer(answers[guess])
+            
             if correct:
                 self._correct_answers += 1
                 self._results.append(f'Question ({i}) {q.get_question()}: Correct! Answer was: {q.get_correct_answer}')
