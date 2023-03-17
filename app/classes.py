@@ -1,4 +1,6 @@
 import random
+import time
+
 import requests
 
 
@@ -62,8 +64,6 @@ class Quiz:
               '#         Let\'s Begin!          #'
               '##################################')
 
-        random.shuffle(self._questions)
-
         for i, q in enumerate(self._questions):
             answers = q.get_answers()
             random.shuffle(answers)
@@ -72,9 +72,23 @@ class Quiz:
                   f'+----------------------------------------------------------|\n')
 
             for j, a in enumerate(answers):
-                print(f'| {j})    {a}                                                 |')
+                print(f'| ({j+1})    {a}                                                 |')
 
             print(f'+----------------------------------------------------------+\n')
+            while True:
+                try:
+                    guess = int(input('What is your answer? (1-4): '))
+                    if 0 < guess < 5:
+                        break
+                except TypeError as e:
+                    print('\nYour guess must be a number between 1 and 4!\n')
+
+            correct = q.check_answer(answers[guess])
+            if correct:
+                self._correct_answers += 1
+
+            time.sleep(0.5)
+
 
 
 
