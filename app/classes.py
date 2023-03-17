@@ -27,7 +27,7 @@ class Quiz:
         self._correct_answers = 0
 
     def _populate_questions(self) -> list[Question] | bool:
-        api_url_base = f'https://the-trivia-pai.com/api/questions'
+        api_url = f'https://the-trivia-api.com/api/questions'
 
         params = {'region': 'GB'}
 
@@ -40,7 +40,7 @@ class Quiz:
         params['limit'] = self.number_of_questions
 
         try:
-            res = requests.get(api_url_base, params=params, headers={'Content-Type': 'application/json'})
+            res = requests.get(api_url, params=params, headers={'Content-Type': 'application/json'})
             if res.ok:
                 qs = res.json()
                 prepare_qs = []
