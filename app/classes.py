@@ -5,21 +5,52 @@ import requests
 
 
 class Question:
+    """A Question class that holds the relevant question information 
+    in a single class with getters and setters
+
+    Args:
+        question_text (str): The question itself
+        answers (list[str]): A list of all the possible answers
+        correct_answer (str): The correct asnwer to the question
+    """
     def __init__(self, question_text: str, answers: list[str], correct_answer: str):
         self._answers = answers
         self._correct_answer = correct_answer
         self._text = question_text
 
-    def get_answers(self):
+    def get_answers(self) -> list[str]:
+        """Returns the possible answers to a question
+
+        Returns:
+            str: The question answers
+        """
         return self._answers
 
-    def get_question(self):
+    def get_question(self) -> str:
+        """Returns the question being asked
+
+        Returns:
+            str: The question text
+        """
         return self._text
 
-    def check_answer(self, guess):
+    def check_answer(self, guess: int):
+        """Checks if the guessed answer is correct
+
+        Args:
+            guess (int): The array index of the guess
+
+        Returns:
+            bool: Guess is correct
+        """
         return True if guess == self._correct_answer else False
 
-    def get_correct_answer(self):
+    def get_correct_answer(self) -> str:
+        """Returns the corect answer for the question
+
+        Returns:
+            str: The correct answer 
+        """
         return self._correct_answer
 
 
@@ -64,28 +95,34 @@ class Quiz:
             print(f'encountered an error: {err}')
             return False
         
-    def print_question(self,q_num: int, q: Question):
+    def print_question(self, q_num: int, q: Question):
+        """Prints a Quiz Question and multiple choice answers to the terminal
 
-            print(f'+----------------------------------------------------------+\n'
-                  f'| QUESTION {q_num}: {q.get_question()}                           |\n'
-                  f'+----------------------------------------------------------|\n')
+        Args:
+            q_num (int): The question Number
+            q (Question): The Question Object
+        """
 
-            for j, a in enumerate(random.shuffle(q.get_answers())):
-                print(f'| ({j+1})    {a}                                                 |')
+        print(f'+----------------------------------------------------------+\n'
+                f'| QUESTION {q_num}: {q.get_question()}                           |\n'
+                f'+----------------------------------------------------------|\n')
 
-            print('+----------------------------------------------------------+\n')
+        for j, a in enumerate(random.shuffle(q.get_answers())):
+            print(f'| ({j+1})    {a}                                                 |')
+
+        print('+----------------------------------------------------------+\n')
 
 
     def get_guess(self) -> int:
-            while True:
-                try:
-                    guess = int(input('What is your answer? (1-4): '))
-                    if 0 < guess < 5:
-                        break
-                except TypeError:
-                    print('\nYour guess must be a number between 1 and 4!\n')
-            
-            return int(guess)
+        while True:
+            try:
+                guess = int(input('What is your answer? (1-4): '))
+                if 0 < guess < 5:
+                    break
+            except TypeError:
+                print('\nYour guess must be a number between 1 and 4!\n')
+        
+        return int(guess)
 
     def run_quiz(self):
         print('##################################\n'
