@@ -66,18 +66,17 @@ class Quiz:
         
     def print_question(self,q_num: int, q: Question):
 
-            random.shuffle(answers)
             print(f'+----------------------------------------------------------+\n'
-                  f'| QUESTION {q_num}}: {q.get_question()}                           |\n'
+                  f'| QUESTION {q_num}: {q.get_question()}                           |\n'
                   f'+----------------------------------------------------------|\n')
 
-            for j, a in enumerate(q.get_answers()):
+            for j, a in enumerate(random.shuffle(q.get_answers())):
                 print(f'| ({j+1})    {a}                                                 |')
 
             print('+----------------------------------------------------------+\n')
 
 
-    def get_guess(self -> int):
+    def get_guess(self) -> int:
             while True:
                 try:
                     guess = int(input('What is your answer? (1-4): '))
