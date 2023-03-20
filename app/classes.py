@@ -34,7 +34,7 @@ class Quiz:
         self._correct_answers = 0
 
     def _populate_questions(self) -> list[Question] | bool:
-        api_url = f'https://the-trivia-api.com/api/questions'
+        api_url = 'https://the-trivia-api.com/api/questions'
 
         params = {'region': 'GB'}
 
@@ -47,7 +47,7 @@ class Quiz:
         params['limit'] = self._number_of_questions
 
         try:
-            res = requests.get(api_url, params=params, headers={'Content-Type': 'application/json'})
+            res = requests.get(api_url, params=params, headers={'Content-Type': 'application/json'}, timeout=60)
             if res.ok:
                 qs = res.json()
                 prepare_qs = []
@@ -58,26 +58,26 @@ class Quiz:
                     prepare_qs.append(
                         Question(question_text=q['question'], answers=all_answers, correct_answer=correct_answer))
                 return prepare_qs
-            else:
-                return False
-        except Exception as e:
-            print(f'encountered an error: {e}')
+           
+            return False
+        except Exception as err:
+            print(f'encountered an error: {err}')
             return False
         
-    def print_question(self):
-            answers = q.get_answers()
+    def print_question(self,q_num: int, q: Question):
+
             random.shuffle(answers)
             print(f'+----------------------------------------------------------+\n'
-                  f'| QUESTION 1: {q.get_question()}                           |\n'
+                  f'| QUESTION {q_num}}: {q.get_question()}                           |\n'
                   f'+----------------------------------------------------------|\n')
 
-            for j, a in enumerate(answers):
+            for j, a in enumerate(q.get_answers()):
                 print(f'| ({j+1})    {a}                                                 |')
 
-            print(f'+----------------------------------------------------------+\n')
+            print('+----------------------------------------------------------+\n')
 
 
-    def get_guess(self):
+    def get_guess(self -> int):
             while True:
                 try:
                     guess = int(input('What is your answer? (1-4): '))
@@ -85,6 +85,8 @@ class Quiz:
                         break
                 except TypeError:
                     print('\nYour guess must be a number between 1 and 4!\n')
+            
+            return int(guess)
 
     def run_quiz(self):
         print('##################################\n'
