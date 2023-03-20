@@ -8,3 +8,4 @@ Allows users to choose their topic, difficulty and number of questions. All quiz
 ## Future
 - User interface (tkinter?)
 - Local leaderboard
+- Save past quizes for re-use
