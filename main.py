@@ -1,16 +1,17 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from app.classes import Question, Quiz
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+categories = {'Arts & Literature': 'arts_and_literature', 'Film & TV': 'film_and_tv',
+              'Food & Drink': 'food_and_drink', 'General Knowledge': 'general_knowledge',
+              'Geography': 'geography', 'History': 'history', 'Music': 'music', 'Science': 'science',
+              'Society & Culture': 'society_and_culture', 'Sport & Literature': 'sport_and_leisure'}
+
+difficulties = ['Easy', 'Medium', 'Hard']
 
 
-# Press the green button in the gutter to run the script.
+def main():
+    pass
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
