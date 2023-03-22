@@ -136,7 +136,7 @@ class Quiz:
             g = self.get_guess()
                 
 
-            correct = q.check_answer(answers[guess])
+            correct = q.check_answer(g)
             
             if correct:
                 self._correct_answers += 1
@@ -149,14 +149,14 @@ class Quiz:
         print('###############################################################\n'
               '#        Thanks for playing, Let\'s see how you did!          #\n'
               '###############################################################\n')
-        print(f'+---------------------------------------------------------------------+\n')
+        print('+---------------------------------------------------------------------+\n')
         for r in self._results:
             print(f'|   {r}')
-        print(f'+---------------------------------------------------------------------+\n')
+        print('+---------------------------------------------------------------------+\n')
 
         print(f'That means you got {self._correct_answers}/{self._number_of_questions} correct!')
         while True:
-            save = input(f'Would you like to save your results? (Y/N): ')
+            save = input('Would you like to save your results? (Y/N): ')
             if save in ['y', 'Y']:
                 with open(f'{self._player}_{datetime.datetime.now()}_results.txt', 'w') as results_file:
                     results_file.writelines(self._results)
