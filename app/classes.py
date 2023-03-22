@@ -161,27 +161,3 @@ class Quiz:
                 with open(f'{self._player}_{datetime.datetime.now()}_results.txt', 'w') as results_file:
                     results_file.writelines(self._results)
             break
-
-
-class QuizApp:
-    def __init__(self):
-        self.user = ''
-        self._categories = {'Arts & Literature': 'arts_and_literature', 'Film & TV': 'film_and_tv',
-                            'Food & Drink': 'food_and_drink', 'General Knowledge': 'general_knowledge',
-                            'Geography': 'geography', 'History': 'history', 'Music': 'music', 'Science': 'science',
-                            'Society & Culture': 'society_and_culture', 'Sport & Literature': 'sport_and_leisure'}
-        self._difficulties = ['Easy', 'Medium', 'Hard']
-
-
-    def start(self):
-        pass
-
-    def header(self):
-        pass
-
-    def categories(self):
-        pass
-
-    def difficulty(self):
-        pass
-
