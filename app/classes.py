@@ -18,6 +18,11 @@ class Question:
         random.shuffle(self._answers)
         self._correct_answer = correct_answer
         self._text = question_text
+        self.cell_width = 0
+        temp = [self._text] + self._answers
+        for e in temp:
+            if len(e)>self.cell_width:
+                self.cell_width = len(e)
 
     def get_answers(self) -> list[str]:
         """Returns the possible answers to a question
@@ -64,6 +69,7 @@ class Quiz:
         self._questions = self._populate_questions()
         self._results = []
         self._correct_answers = 0
+        self._text_width = 128
 
     def _populate_questions(self) -> list[Question] | bool:
         api_url = 'https://the-trivia-api.com/api/questions'
@@ -103,14 +109,16 @@ class Quiz:
             q_num (int): The question Number
             q (Question): The Question Object
         """
-
-        print(f'+----------------------------------------------------------+\n'
-                f'| QUESTION {q_num}: {q.get_question()}                           |\n'
-                f'+----------------------------------------------------------|\n')
+        
+        text_width = 128
+        print(f'+-{"-"*self._text_width}-+\n'
+                f'| {f"QUESTION {q_num}: {q.get_question()}": <{self._text_width}} |\n'
+                f'+-{"-"*self._text_width}-+')
         for j, a in enumerate(q.get_answers()):
-            print(f'| ({j+1})    {a}                                                 |')
+            temp = f'({j+1}): {a}'
+            print(f'| {temp: <{self._text_width}} |')
 
-        print('+----------------------------------------------------------+\n')
+        print(f'+-{"-"*self._text_width}-+\n')
 
 
     def get_guess(self) -> int:
@@ -125,9 +133,9 @@ class Quiz:
         return int(guess)
 
     def run_quiz(self):
-        print('##################################\n'
-              '#         Let\'s Begin!          #\n'
-              '##################################\n')
+        print(f'#{"":#>{self._text_width}}#\n'
+              f'#{"Let us Begin!": ^{self._text_width}}#\n'
+              f'#{"":#>{self._text_width}}#\n')
 
         for i, q in enumerate(self._questions):
             self.print_question(i, q)
@@ -140,9 +148,9 @@ class Quiz:
             
             if correct:
                 self._correct_answers += 1
-                self._results.append(f'Question ({i}) {q.get_question()}: Correct! Answer was: {q.get_correct_answer()}')
+                self._results.append(f'Question ({i}) {q.get_question()}: Correct! Answer was: {q.get_correct_answer()}\n')
             else:
-                self._results.append(f'Question ({i}) {q.get_question()}: incorrect. Answer was: {q.get_correct_answer()}')
+                self._results.append(f'Question ({i}) {q.get_question()}: incorrect. Answer was: {q.get_correct_answer()}\n')
             time.sleep(0.5)
 
         # Questions finished
