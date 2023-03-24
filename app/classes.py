@@ -15,6 +15,7 @@ class Question:
     """
     def __init__(self, question_text: str, answers: list[str], correct_answer: str):
         self._answers = answers
+        random.shuffle(self._answers)
         self._correct_answer = correct_answer
         self._text = question_text
 
@@ -43,7 +44,7 @@ class Question:
         Returns:
             bool: Guess is correct
         """
-        return True if guess == self._correct_answer else False
+        return True if self._answers[guess-1] == self._correct_answer else False
 
     def get_correct_answer(self) -> str:
         """Returns the corect answer for the question
@@ -57,7 +58,7 @@ class Question:
 class Quiz:
     def __init__(self, player: str, category: str = None, difficulty: str = None, num_qs: int = 10):
         self._player = player
-        self.difficulty = difficulty
+        self.difficulty = difficulty.lower()
         self.category = category
         self._number_of_questions = num_qs
         self._questions = self._populate_questions()
@@ -89,7 +90,7 @@ class Quiz:
                     prepare_qs.append(
                         Question(question_text=q['question'], answers=all_answers, correct_answer=correct_answer))
                 return prepare_qs
-           
+            print(f'{res.status_code}: {res.content}')
             return False
         except Exception as err:
             print(f'encountered an error: {err}')
@@ -106,8 +107,7 @@ class Quiz:
         print(f'+----------------------------------------------------------+\n'
                 f'| QUESTION {q_num}: {q.get_question()}                           |\n'
                 f'+----------------------------------------------------------|\n')
-
-        for j, a in enumerate(random.shuffle(q.get_answers())):
+        for j, a in enumerate(q.get_answers()):
             print(f'| ({j+1})    {a}                                                 |')
 
         print('+----------------------------------------------------------+\n')
@@ -140,9 +140,9 @@ class Quiz:
             
             if correct:
                 self._correct_answers += 1
-                self._results.append(f'Question ({i}) {q.get_question()}: Correct! Answer was: {q.get_correct_answer}')
+                self._results.append(f'Question ({i}) {q.get_question()}: Correct! Answer was: {q.get_correct_answer()}')
             else:
-                self._results.append(f'Question ({i}) {q.get_question()}: incorrect. Answer was: {q.get_correct_answer}')
+                self._results.append(f'Question ({i}) {q.get_question()}: incorrect. Answer was: {q.get_correct_answer()}')
             time.sleep(0.5)
 
         # Questions finished
